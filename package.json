@@ -65,7 +65,9 @@
     "beta-build": "docker rmi -f ipfs-companion-beta-build && docker build -t ipfs-companion-beta-build --build-arg USER_ID=$(id -u ${USER}) --build-arg GROUP_ID=$(id -g ${USER}) . && mkdir -p build && docker run --rm -it --net=host -e RELEASE_CHANNEL=beta -v $(pwd)/build:/home/node/app/build ipfs-companion-beta-build yarn ci:build",
     "release-build": "docker rmi -f ipfs-companion-release-build && docker build -t ipfs-companion-release-build --build-arg USER_ID=$(id -u ${USER}) --build-arg GROUP_ID=$(id -g ${USER}) . && mkdir -p build && docker run --rm -it --net=host -e RELEASE_CHANNEL=stable -v $(pwd)/build:/home/node/app/build ipfs-companion-release-build yarn ci:build",
     "dev-build": "npx yarn@1.22.4 && npx yarn@1.22.4 build",
-    "yarn-build": "npm run dev-build"
+    "yarn-build": "npm run dev-build",
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "private": true,
   "preferGlobal": false,
@@ -161,10 +163,12 @@
     "timers-browserify-full": "0.0.1",
     "uri-to-multiaddr": "3.0.2",
     "webextension-polyfill": "0.6.0",
-    "webrtc-ips": "0.1.4"
+    "webrtc-ips": "0.1.4",
+    "@snyk/protect": "latest"
   },
   "engines": {
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
-  }
+  },
+  "snyk": true
 }
